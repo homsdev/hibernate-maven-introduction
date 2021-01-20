@@ -13,31 +13,32 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
-
 		
-
-		Configuration con = new Configuration().configure().addAnnotatedClass(Alien.class);
+		Configuration con = new Configuration().configure()
+				.addAnnotatedClass(Student.class)
+				.addAnnotatedClass(Laptop.class);
 		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).buildServiceRegistry();
 		SessionFactory sf = con.buildSessionFactory(reg);
 		Session session = sf.openSession();
 
+		Student student=new Student();
+		student.setName("HomS");
+		student.setRollno(1);
+		student.setMarks(50);
+		
+		Laptop laptop=new Laptop();
+		laptop.setId(101);
+		laptop.setModel("Dell");
+		
+		student.getLaptops().add(laptop);
+		laptop.getStudents().add(student);		
+		
 		Transaction tx = session.beginTransaction();
 		
-		AlienName an= new AlienName();
-		an.setfName("HomSo");
-		an.setlName("Razome");
-		an.setmName("Marho");
-		Alien alien = new Alien();
-		alien.setAcolor("green");
-		alien.setAid(101);
-		alien.setAname(an);
+		session.save(laptop);
+		session.save(student);
 		
-		session.save(alien);
-
+		
 		tx.commit();
-
-		System.out.println(alien.toString());
-
 	}
 }
