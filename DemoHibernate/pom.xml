@@ -22,7 +22,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -36,6 +36,25 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.38</version>
 		</dependency>
+
+		<!-- For using Second Level Cache ehChache and hibernate-ehcache Dependencies are required -->
+		<!-- https://mvnrepository.com/artifact/org.ehcache/ehcache -->
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>3.9.0</version>
+		</dependency>
+
+	<!-- Hibernate eh.cache must be the same version as the one we are curently 
+		using -->
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-ehcache -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>4.1.6.Final</version>
+		</dependency>
+
+
 
 	</dependencies>
 </project>

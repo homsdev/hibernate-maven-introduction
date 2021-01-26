@@ -7,7 +7,10 @@
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/neon</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="hibernate.show_sql">true</property>
+		<!-- These two properties are required to enable second level cache -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
 	</session-factory>
 </hibernate-configuration>

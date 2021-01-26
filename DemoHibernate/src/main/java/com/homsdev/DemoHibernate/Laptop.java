@@ -13,9 +13,7 @@ public class Laptop {
 	@Id
 	private int id;
 	private String model;
-	@ManyToMany
-	private List<Student> students= new ArrayList<Student>();
-
+	
 	public int getId() {
 		return id;
 	}
@@ -34,14 +32,7 @@ public class Laptop {
 
 	
 
-	public List<Student> getStudents() {
-		return students;
-	}
-
-	public void setStudents(List<Student> students) {
-		this.students = students;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Laptop [id=" + id + ", model=" + model + "]";
