@@ -1,5 +1,6 @@
 package com.homsdev.DemoHibernate;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -20,18 +21,25 @@ public class App {
 		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).buildServiceRegistry();
 		SessionFactory sf = con.buildSessionFactory(reg);
 		
-		Session session = sf.openSession();
-		session.beginTransaction();
-		Alien a= (Alien) session.get(Alien.class, 101);
-		System.out.println(a);
-		session.getTransaction().commit();
-		session.close();
+		Alien a= null;
 		
-		session=sf.openSession();
-		session.beginTransaction();	
-		Alien b= (Alien) session.get(Alien.class, 101);
-		System.out.println(b);
-		session.getTransaction().commit();
-		session.beginTransaction();
+		Session session1 = sf.openSession();
+		session1.beginTransaction();
+		Query q1=session1.createQuery("from Alien where aid=101");
+		q1.setCacheable(true);//This instruction makes available the use of cache for the query
+		a=(Alien)q1.uniqueResult();
+		System.out.println(a.getAname());
+		session1.getTransaction().commit();
+		session1.close();
+		
+		Session session2 = sf.openSession();
+		session2.beginTransaction();
+		Query q2=session2.createQuery("from Alien where aid=101");
+		q2.setCacheable(true);//This instruction makes available the use of cache for the query
+		a=(Alien)q2.uniqueResult();
+		System.out.println(a.getAname());
+		session2.getTransaction().commit();
+		session2.close();
+		
 	}
 }
