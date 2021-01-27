@@ -1,13 +1,7 @@
 package com.homsdev.DemoHibernate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
 
 @Entity
 public class Student {
@@ -16,8 +10,6 @@ public class Student {
 	private int rollno;
 	private String name;
 	private int marks;
-	@ManyToMany(mappedBy = "students")
-	private List<Laptop> laptops= new ArrayList<Laptop>();
 
 	public int getRollno() {
 		return rollno;
@@ -43,14 +35,10 @@ public class Student {
 		this.marks = marks;
 	}
 
-	public List<Laptop> getLaptops() {
-		return laptops;
-	}
-
-	public void setLaptops(List<Laptop> laptops) {
-		this.laptops = laptops;
+	@Override
+	public String toString() {
+		return "Student [rollno=" + rollno + ", name=" + name + ", marks=" + marks + "]";
 	}
 
 	
-
 }
