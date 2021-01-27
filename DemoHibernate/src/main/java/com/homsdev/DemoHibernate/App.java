@@ -21,18 +21,24 @@ public class App {
 		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).buildServiceRegistry();
 		SessionFactory sf = con.buildSessionFactory(reg);
 		Session session = sf.openSession();
-		
-//<- Object is on Transient state before Session>
-		Laptop l= new Laptop();
-		l.setId(54);
-		l.setModel("T800X");
-		l.setPrice(800);
+
 		session.beginTransaction();
-//< Object in Session is on persistence state>
-		session.save(l);
+//		Load method will throw and OnjectNotFoundException if the required id doesn´t exist in DB
+		
+		Laptop lap=null;
+		try {
+			lap = (Laptop) session.load(Laptop.class, 105);
+			System.out.println(lap);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("ID no encontrado");
+			session.evict(lap);
+		}
+		
+//Get will return null object if ID does not exist on DB
+		lap = (Laptop) session.get(Laptop.class, 105);
+		System.out.println(lap);
 		session.getTransaction().commit();
-//	<Object is detached from session >	
-		session.evict(l);
-		l.setPrice(300);
 	}
 }
