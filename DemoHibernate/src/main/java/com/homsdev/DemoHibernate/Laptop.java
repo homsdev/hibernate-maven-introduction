@@ -1,19 +1,16 @@
 package com.homsdev.DemoHibernate;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Laptop {
 	@Id
 	private int id;
 	private String model;
-	
+	private int price;
+
 	public int getId() {
 		return id;
 	}
@@ -30,12 +27,17 @@ public class Laptop {
 		this.model = model;
 	}
 
-	
+	public int getPrice() {
+		return price;
+	}
 
-	
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
-		return "Laptop [id=" + id + ", model=" + model + "]";
+		return "Laptop [id=" + id + ", model=" + model + ", price=" + price + "]";
 	}
 
 }

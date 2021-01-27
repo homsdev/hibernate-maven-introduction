@@ -17,55 +17,22 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class App {
 	public static void main(String[] args) {
 
-		Configuration con = new Configuration().configure().addAnnotatedClass(Student.class)
-				.addAnnotatedClass(Laptop.class);
+		Configuration con = new Configuration().configure().addAnnotatedClass(Laptop.class);
 		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).buildServiceRegistry();
 		SessionFactory sf = con.buildSessionFactory(reg);
-
-		
 		Session session = sf.openSession();
+		
+//<- Object is on Transient state before Session>
+		Laptop l= new Laptop();
+		l.setId(54);
+		l.setModel("T800X");
+		l.setPrice(800);
 		session.beginTransaction();
-		
-		//		Fetch all data from a table
-//		Query query=session.createQuery("from Student"); 
-//		List<Student> students=	query.list();
-//		
-//		for(Student student:students) {
-//			System.out.println(student);
-//		}
-		
-		//Fetch data that satisfies the condition
-//		Query query=session.createQuery("from Student where marks >50"); 
-//		List<Student> students=	query.list();
-//		
-//		for(Student student:students) {
-//			System.out.println(student);
-//		}
-		
-		//Fetch one single value
-//		Query query=session.createQuery("from Student where rollno = 2");
-//		Student student=(Student)query.uniqueResult();
-//		System.out.println(student);
-		
-
-		//Fetch data with  dynamic values without giving name to parameter
-//		int param=60;
-//		Query query=session.createQuery("select sum(marks) from Student s where s.marks > ?");
-//		query.setParameter(0, param);
-//		Long marksSum= (Long)query.uniqueResult();
-//		System.out.println(marksSum);
-		
-		//Fetch data with  dynamic values giving name to parameter
-//				int param=60;
-//				Query query=session.createQuery("select sum(marks) from Student s where s.marks > :param");
-//				query.setParameter("param", param);
-//				Long marksSum= (Long)query.uniqueResult();
-//				System.out.println(marksSum);
-		
-//		Fetch only some columns from data
-		Query query=session.createQuery("select name,marks from Student s where s.rollno = 4");
-		Object[] student= (Object[]) query.uniqueResult();
-		System.out.println(student[0]+" : "+student[1]);
-		
+//< Object in Session is on persistence state>
+		session.save(l);
+		session.getTransaction().commit();
+//	<Object is detached from session >	
+		session.evict(l);
+		l.setPrice(300);
 	}
 }
